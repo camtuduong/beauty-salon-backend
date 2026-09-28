@@ -25,28 +25,94 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup with docker
+## Development and Deployment Workflow
+
+Develop locally, push to GitHub, and let Render deploy to Supabase:
+
+```text
+Local machine (Docker PostgreSQL) --git push--> GitHub --auto deploy--> Render --> Supabase (production database)
+```
+
+### Local development
+
+```bash
+docker compose up -d db
+npm run start:dev
+```
+
+Run NestJS directly for hot reload. The local `.env` should point to `localhost`. Stop the local database with `docker compose down`; data remains in the `db_data` volume.
+
+### Code changes
+
+1. Test changes locally.
+2. Commit and push:
+
+   ```bash
+   git add .
+   git commit -m "describe change"
+   git push
+   ```
+
+3. Render builds and deploys the new version.
+
+### Database changes
+
+1. Update `prisma/schema.prisma`.
+2. Create a local migration:
+
+   ```bash
+   npx prisma migrate dev --name describe_change
+   ```
+
+3. Test locally and commit both `schema.prisma` and `prisma/migrations/`.
+4. Push the changes. Render should apply them with `prisma migrate deploy`.
+
+Use `migrate dev` only with the local database. Never edit an applied migration or run `migrate dev` against Supabase.
+
+### Docker check before large changes
+
+```bash
+docker compose up -d --build
+docker compose logs -f api
+```
+
+### Render configuration
+
+The current Dockerfile starts `node dist/main.js` and does not run migrations automatically. Configure the Render Start Command as:
+
+```bash
+npx prisma migrate deploy && node dist/main.js
+```
+
+Set the production `DATABASE_URL` in Render Environment Variables. Keep local and production data separate, and never commit database credentials.
+
+### Pending tasks
+
+- Rotate the previously exposed Supabase database password and update Render.
+- Enable RLS for Supabase tables.
+- Fix the Observe 401 error by setting `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET`, or remove `@nestjs/observe`.
+
+## Docker setup
 
 ```bash
 docker compose up -d --build
 
-#test
+# inspect containers
 docker compose ps
 docker compose logs -f api
 
-#stop docker
+# stop containers
 docker compose down
-
 ```
 
 ## Compile and run the project
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
+# development with watch mode
 $ npm run start:dev
+
+# development một lần
+$ npm run start
 
 # production mode
 $ npm run start:prod
@@ -65,14 +131,14 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## CLI when want to build a module
+## Generate modules with the Nest CLI
 
 ```bash
 $ nest g module users
 $ nest g controller users
 $ nest g service users
 
-# or shorter
+# or use the shorter form
 $ nest g resource users
 
 ```
