@@ -25,10 +25,18 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## Project setup with docker
 
 ```bash
-$ npm install
+docker compose up -d --build
+
+#test
+docker compose ps
+docker compose logs -f api
+
+#stop docker
+docker compose down
+
 ```
 
 ## Compile and run the project
@@ -64,11 +72,10 @@ $ nest g module users
 $ nest g controller users
 $ nest g service users
 
-# or shorter 
+# or shorter
 $ nest g resource users
 
 ```
-
 
 ## Deployment
 
