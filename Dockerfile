@@ -18,9 +18,8 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma                   
-COPY --from=builder /app/prisma7.config.ts ./  
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma7.config.ts ./
 
-# Expose the port the app runs on - it is the same as defined in main.ts - and not run yet
 EXPOSE 5005
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy --config prisma7.config.ts && node dist/main.js"]
