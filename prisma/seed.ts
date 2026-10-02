@@ -33,6 +33,7 @@ async function main() {
       description: 'A layered haircut',
       imageUrl: 'https://picsum.photos/200/300',
       isActive: true,
+      categoryId: '14fbc1a3-1910-4a3b-b572-ff532667abaf',
     },
     {
       name: 'Ultimate Manicure',
@@ -40,6 +41,7 @@ async function main() {
       description: 'A relaxing manicure',
       imageUrl: 'https://picsum.photos/200/300',
       isActive: true,
+      categoryId: '2ec3630c-ee9c-4778-b02b-2e4b25a4a0da',
     },
     {
       name: 'Pedicure',
@@ -47,6 +49,7 @@ async function main() {
       description: 'A soothing pedicure',
       imageUrl: 'https://picsum.photos/200/300',
       isActive: true,
+      categoryId: '2ec3630c-ee9c-4778-b02b-2e4b25a4a0da',
     },
     {
       name: 'Facial',
@@ -54,6 +57,7 @@ async function main() {
       description: 'A rejuvenating facial',
       imageUrl: 'https://picsum.photos/200/300',
       isActive: true,
+      categoryId: 'f3c383ce-29bd-4a46-94b4-1af7b2ef4b33',
     },
   ];
 

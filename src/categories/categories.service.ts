@@ -1,6 +1,6 @@
+import { CreateCategoryDto } from '@/categories/dto/create-category.dto.js';
+import { PrismaService } from '@/prisma/prisma.service.js';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateCategoryDto } from './dto/create-category.dto.js';
 // import { UpdateCategoryDto } from './dto/update-category.dto.js';
 
 @Injectable()
